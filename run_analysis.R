@@ -1,5 +1,6 @@
 library(dplyr)
 
+# Step 1 - Merge the training and the test sets to create one data set.
 
 features <- read.table("C:/Users/yazubair/Documents/Coursera/R/Data Science  Foundations Using R/3 - Getting and Cleaning Data/UCI HAR Dataset/features.txt")
 feature_names <- c("subject.id", "activity", as.vector(features$V2))
@@ -19,6 +20,7 @@ test <- cbind(test_data_subject, test_data_y, test_data_x)
 combined_data <- rbind(train, test)
 
 
+# Step 2 - Extract only the measurements on the mean and standard deviation for each measurement. 
 
 names(combined_data) <- feature_names
 
@@ -26,11 +28,13 @@ extracted <- feature_names[c(1,2, grep("[Mm][e][a][n]|[s][t][d]", feature_names)
 get_mean_std <- combined_data[, extracted]
 
 
+# Step 3 - Use descriptive activity names to name the activities in the data set
 
 activity_labels <- read.table("C:/Users/yazubair/Documents/Coursera/R/Data Science  Foundations Using R/3 - Getting and Cleaning Data/UCI HAR Dataset/activity_labels.txt")
 get_mean_std$activity <- factor(get_mean_std$activity, labels=activity_labels$V2)
 
 
+# Step 4 - Appropriately labels the data set with descriptive variable names. 
 
 names(get_mean_std) <- gsub("Acc", "Acceleration", names(get_mean_std), fixed = TRUE)
 names(get_mean_std) <- gsub("-arCoeff()", "Auto_Regression_Coefficient", names(get_mean_std), fixed = TRUE)
@@ -59,6 +63,7 @@ names(get_mean_std) <- gsub("-meanFreq()", "Weighted_Average_of_Frequency_Compon
 names(get_mean_std) <- gsub("-skewness()", "Skewness", names(get_mean_std), fixed = TRUE)
 
 
+Step 5 - Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 tidy_data <- get_mean_std %>% 
   group_by(subject.id, activity) %>%
