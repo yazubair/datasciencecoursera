@@ -34,7 +34,7 @@ activity_labels <- read.table("C:/Users/yazubair/Documents/Coursera/R/Data Scien
 get_mean_std$activity <- factor(get_mean_std$activity, labels=activity_labels$V2)
 
 
-# Step 4 - Appropriately labels the data set with descriptive variable names. 
+# Step 4 - Appropriately label the data set with descriptive variable names. 
 
 names(get_mean_std) <- gsub("Acc", "Acceleration", names(get_mean_std), fixed = TRUE)
 names(get_mean_std) <- gsub("-arCoeff()", "Auto_Regression_Coefficient", names(get_mean_std), fixed = TRUE)
@@ -63,7 +63,7 @@ names(get_mean_std) <- gsub("-meanFreq()", "Weighted_Average_of_Frequency_Compon
 names(get_mean_std) <- gsub("-skewness()", "Skewness", names(get_mean_std), fixed = TRUE)
 
 
-Step 5 - Creates a second, independent tidy data set with the average of each variable for each activity and each subject.
+Step 5 - Create a second, independent tidy data set with the average of each variable for each activity and each subject.
 
 tidy_data <- get_mean_std %>% 
   group_by(subject.id, activity) %>%
